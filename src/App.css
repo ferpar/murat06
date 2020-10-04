@@ -8,7 +8,9 @@
 }
 
 #root > div {
-  height: 50%;
+  height: 40%;
+  width: 70%;
+  align-self: center;
 }
 
 svg {
