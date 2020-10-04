@@ -1,11 +1,3 @@
-svg {
-  background-color: lightgrey;
-  display: block;
-  height:300px;
-  overflow: visible;
-  width: 100%;
-}
-
 #root {
   align-items: stretch;
   display: flex;
@@ -13,6 +5,18 @@ svg {
   height: 100vh;
   justify-content: center;
   padding: 0 50px;
+}
+
+#root > div {
+  height: 50%;
+}
+
+svg {
+  background-color: lightgrey;
+  display: block;
+  height: 100%;
+  overflow: visible;
+  width: 100%;
 }
 
 button {

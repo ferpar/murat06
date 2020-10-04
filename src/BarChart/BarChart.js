@@ -31,14 +31,14 @@ const BarChart = ({data}) => {
       .range([dimensions.height, 0]);
 
     const colorScale = scaleLinear()
-      .domain([75, 150, 300])
+      .domain([75, 150, dimensions.height])
       .range(["green", "orange", "red"])
       .clamp(true);
 
     const xAxis = axisBottom(xScale).ticks(data.length).tickFormat( idx => idx + 1);
     svg
       .select(".x-axis")
-      .style("transform", "translateY(300px)")
+      .style("transform", `translateY(${dimensions.height}px)`)
       .call(xAxis);
 
     const yAxis = axisRight(yScale).ticks(5);
@@ -54,7 +54,7 @@ const BarChart = ({data}) => {
       .attr("class", "bar")
       .style("transform", "scale(1, -1)")
       .attr("x", (value, index) => xScale(index))
-      .attr("y", -300)
+      .attr("y", -dimensions.height)
       .attr("index", (value, index) => index)
       .attr("width", xScale.bandwidth())
       .on("mouseenter", (event, value) => {
@@ -74,7 +74,7 @@ const BarChart = ({data}) => {
       .on("mouseleave", () => svg.select(".tooltip").remove())
       .transition()
       .attr("fill", colorScale)
-      .attr("height", value => 300 - yScale(value));
+      .attr("height", value => dimensions.height - yScale(value));
 
     }, [data, dimensions]);
   
