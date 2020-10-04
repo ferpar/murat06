@@ -1,16 +1,18 @@
 svg {
-  height:300px;
   background-color: lightgrey;
+  display: block;
+  height:300px;
   overflow: visible;
-  margin-bottom: 1rem;
+  width: 100%;
 }
 
 #root {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
+  padding: 0 50px;
 }
 
 button {

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { 
   select, 
   axisBottom, 
@@ -6,17 +6,20 @@ import {
   scaleLinear,
   scaleBand
 } from "d3";
+import useResizeObserver from "../ResizeObserver";
 
-const dimensions = {
-  height: 300,
-  width: 450
-}
 
 const BarChart = ({data}) => {
 
   const svgRef = useRef();
+  const wrapperRef = useRef();
+  const dimensions = useResizeObserver(wrapperRef);
+
   useEffect(() => {
     const svg = select(svgRef.current);
+    console.log(dimensions)
+
+    if (!dimensions) return;
 
     const xScale = scaleBand()
       .domain(data.map( (val, idx) => idx))
@@ -31,9 +34,6 @@ const BarChart = ({data}) => {
       .domain([75, 150, 300])
       .range(["green", "orange", "red"])
       .clamp(true);
-
-    svg
-      .style("width", `${dimensions.width}px`);
 
     const xAxis = axisBottom(xScale).ticks(data.length).tickFormat( idx => idx + 1);
     svg
@@ -76,14 +76,17 @@ const BarChart = ({data}) => {
       .attr("fill", colorScale)
       .attr("height", value => 300 - yScale(value));
 
-    }, [data]);
+    }, [data, dimensions]);
   
   return (
-    data ? 
-    <svg ref={svgRef}>
-      <g className="x-axis" />
-      <g className="y-axis" />
-    </svg>
+    data ?
+    <div ref={wrapperRef} style={{marginBottom: "2rem" }}>
+      <svg ref={svgRef}>
+        <g className="x-axis" />
+        <g className="y-axis" />
+      </svg>
+    </div>
+    
     :
     <h4>No Data</h4>
   )
